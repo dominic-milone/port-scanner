@@ -8,16 +8,26 @@ Created on Wed Nov 18 21:58:47 2026
 import socket
 
 host = "127.0.0.1"
-port = 8000
 
-sock = socket.socket(socket.AF_INET, 
-                     socket.SOCK_STREAM)
+### Check Multiple Ports
 
-result = sock.connect_ex((host,port))
+def scan_port(host,port):
+    sock = socket.socket(socket.AF_INET, 
+                         socket.SOCK_STREAM)
+    sock.settimeout(0.25)
+    result = sock.connect_ex((host,port))
+    sock.close()
+    return result == 0
 
-if result == 0:
-    print(f"Port {port} is open")
-else:
-    print(f"Port {port} is closed")
-    
-sock.close()
+for port in range(5000,8001):
+    if scan_port(host, port):
+        print(f"Port {port} is open")
+        
+    else:
+        print(f"Port {port} is closed")
+            
+
+
+
+
+
