@@ -6,8 +6,13 @@ Created on Wed Nov 18 21:58:47 2026
 """
 
 import socket
+import argparse
 
-host = "127.0.0.1"
+parser = argparse.ArgumentParser(description="Simple TCP port scanner")
+parser.add_argument("host", help="IP address to scan")
+parser.add_argument("--start", type=int, default=1, help="First port to scan")
+parser.add_argument("--end", type=int, default=1024, help="Last port to scan")
+args = parser.parse_args()
 
 ### Check Multiple Ports
 
@@ -19,12 +24,10 @@ def scan_port(host,port):
     sock.close()
     return result == 0
 
-for port in range(5000,8001):
-    if scan_port(host, port):
+for port in range(args.start, args.end + 1):
+    if scan_port(args.host, port):
         print(f"Port {port} is open")
         
-    else:
-        print(f"Port {port} is closed")
             
 
 
