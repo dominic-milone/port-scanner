@@ -19,14 +19,26 @@ args = parser.parse_args()
 def scan_port(host,port):
     sock = socket.socket(socket.AF_INET, 
                          socket.SOCK_STREAM)
-    sock.settimeout(0.25)
+    sock.settimeout(0.001)
     result = sock.connect_ex((host,port))
     sock.close()
     return result == 0
 
+def get_service(port):
+    try:
+       return socket.getservbyport(port,"tcp")
+    except OSError:
+            return "unknown"
+
+
+
 for port in range(args.start, args.end + 1):
     if scan_port(args.host, port):
-        print(f"Port {port} is open")
+        print(f"Port {port} is open ({get_service(port)})")
+    
+  
+        
+
         
             
 
