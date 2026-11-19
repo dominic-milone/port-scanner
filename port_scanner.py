@@ -41,7 +41,8 @@ def get_service(port):
 
 for port in range(args.start, args.end + 1):
     if scan_port(args.host, port):
-        print(f"Port {port} is open ({get_service(port)})")
+        port_details = (f"Port {port} is open ({get_service(port)})")
+        print(port_details)
 
 for port in range(args.start, args.end + 1):
     if scan_port(args.host,port):
@@ -51,7 +52,7 @@ for port in range(args.start, args.end + 1):
 end_time = time.time()
 total_time = end_time - start_time
 print(f"Scan complete in {total_time:.2f} seconds")
-print("There were a total of ", count, "ports that were open")
+print("There were a total of", count, "port(s) that were open")
 
-
-
+with open("results.txt", "w", encoding="utf-8") as file:
+    file.write(port_details)
