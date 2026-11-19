@@ -19,7 +19,7 @@ args = parser.parse_args()
 def scan_port(host,port):
     sock = socket.socket(socket.AF_INET, 
                          socket.SOCK_STREAM)
-    sock.settimeout(0.001)
+    sock.settimeout(0.50)
     result = sock.connect_ex((host,port))
     sock.close()
     return result == 0
